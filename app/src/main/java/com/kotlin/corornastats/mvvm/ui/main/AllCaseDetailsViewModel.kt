@@ -1,6 +1,7 @@
 package com.kotlin.corornastats.mvvm.ui.main
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.kotlin.corornastats.mvvm.data.model.Cases
 import com.kotlin.corornastats.mvvm.data.respository.UserRepository
 import com.kotlin.corornastats.mvvm.ui.base.BaseViewModel
@@ -20,19 +21,15 @@ class AllCaseDetailsViewModel(
     val deaths: MutableLiveData<String> = MutableLiveData()
     val totalActive: MutableLiveData<String> = MutableLiveData()
     val totalClosed: MutableLiveData<String> = MutableLiveData()
-
+    val liveData: MutableLiveData<Cases> = userRepository.liveData
 
     val loggingIn: MutableLiveData<Boolean> = MutableLiveData()
 
     fun onNetworkCall() {
         if (checkInternetConncetionWithMessage()) {
             loggingIn.postValue(true)
-            val user = userRepository.getCaseNumbers()
-            confirmedCases.postValue(user.confirmed)
-            recoveredCases.postValue(user.recovered)
-            deaths.postValue(user.deaths)
-            totalActive.postValue(user.totalActive)
-            totalClosed.postValue(user.totalClosed)
+            userRepository.getCaseNumbers()
+
             loggingIn.postValue(false)
         } else {
             handleNetworkError(Throwable("Network Error"))

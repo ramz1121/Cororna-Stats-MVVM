@@ -20,22 +20,22 @@ class AllCaseDetailsActivity : BaseActivity<AllCaseDetailsViewModel>() {
 
     override fun setupObservers() {
         super.setupObservers()
+        viewModel.liveData.observe(this, Observer {
+            tv_currentcases.setText(it.confirmed)
+        })
+        viewModel.liveData.observe(this, Observer {
+            tv_deaths.setText(it.deaths)
+        })
+        viewModel.liveData.observe(this, Observer {
+            tv_recoveredcases.setText(it.recovered)
+        })
+        viewModel.liveData.observe(this, Observer {
+            tv_active_cases.setText(it.totalActive)
+        })
+        viewModel.liveData.observe(this, Observer {
+            tv_closed_cases.setText(it.totalClosed)
+        })
 
-        viewModel.confirmedCases.observe(this, Observer {
-            tv_currentcases.setText(it)
-        })
-        viewModel.deaths.observe(this, Observer {
-            tv_deaths.setText(it)
-        })
-        viewModel.recoveredCases.observe(this, Observer {
-            tv_recoveredcases.setText(it)
-        })
-        viewModel.totalActive.observe(this, Observer {
-            tv_active_cases.setText(it)
-        })
-        viewModel.totalClosed.observe(this, Observer {
-            tv_closed_cases.setText(it)
-        })
         viewModel.loggingIn.observe(this, Observer {
             pb_loading.visibility = if (it) View.VISIBLE else View.GONE
         })

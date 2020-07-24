@@ -21,10 +21,12 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies(buildActivityComponent())
         super.onCreate(savedInstanceState)
+
         setContentView(provideLayoutId())
         setupObservers()
         setupView(savedInstanceState)
         viewModel.onCreate()
+
     }
 
     private fun buildActivityComponent() =

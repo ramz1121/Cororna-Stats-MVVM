@@ -14,7 +14,7 @@ object Networking {
     const val HEADER_API_KEY = "x-api-key"
 
 
-    private const val NETWORK_CALL_TIMEOUT = 60
+    private const val NETWORK_CALL_TIMEOUT = 300
     internal lateinit var API_KEY:String
 
     fun create(baseUrl:String): NetworkService{

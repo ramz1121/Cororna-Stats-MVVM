@@ -2,9 +2,12 @@ package com.kotlin.corornastats.mvvm.di.component
 
 import android.app.Application
 import android.content.Context
+import android.content.MutableContextWrapper
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
 import com.kotlin.corornastats.mvvm.CoronaStatsApplication
 import com.kotlin.corornastats.mvvm.data.local.db.DatabaseService
+import com.kotlin.corornastats.mvvm.data.model.Cases
 import com.kotlin.corornastats.mvvm.data.remote.NetworkService
 import com.kotlin.corornastats.mvvm.data.respository.UserRepository
 import com.kotlin.corornastats.mvvm.di.ApplicationContext
@@ -57,4 +60,6 @@ interface ApplicationComponent {
     fun getSchedulerProvider(): SchedulerProvider
 
     fun getCompositeDisposable(): CompositeDisposable
+
+    fun getLiveDataCases():MutableLiveData<Cases>
 }

@@ -9,8 +9,8 @@ import javax.inject.Singleton
 
 
 @Singleton
-interface NetworkService{
+interface NetworkService {
     @GET(Endpoints.CASES)
     //open fun getFlowers(): Call<JsonElement?>?
-    fun getJSON(): Call<JsonObject>?
+    fun getJSON(): Call<JsonObject>
 }

@@ -1,6 +1,7 @@
 package com.kotlin.corornastats.mvvm.data.respository
 
 import android.accounts.NetworkErrorException
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.kotlin.corornastats.mvvm.data.local.db.DatabaseService
@@ -20,7 +21,8 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     private val networkService: NetworkService,
     private val databaseService: DatabaseService,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    val liveData :MutableLiveData<Cases>
 ) {
     companion object {
         private const val TAG = "User Repo"
@@ -34,7 +36,7 @@ class UserRepository @Inject constructor(
         case.totalClosed
     }
 
-    fun getCaseNumbers():Cases {
+    fun getCaseNumbers() {
         var confirmedString: String = ""
         var deathsString: String = ""
         var recoveredString: String = ""
@@ -78,12 +80,14 @@ class UserRepository @Inject constructor(
                         //get total closed cases
                         closed = deaths + recovered
                         totalClosedString = NumberFormater.formatNumber(closed)
-                        Cases(
-                            confirmedString,
-                            recoveredString,
-                            deathsString,
-                            totalActiveString,
-                            totalClosedString
+                        liveData.postValue(
+                            Cases(
+                                confirmedString,
+                                recoveredString,
+                                deathsString,
+                                totalActiveString,
+                                totalClosedString
+                            )
                         )
 
                     }
@@ -98,13 +102,6 @@ class UserRepository @Inject constructor(
         } catch (e: Exception) {
             println(e.message)
         }
-        return Cases(
-            confirmedString,
-            recoveredString,
-            deathsString,
-            totalActiveString,
-            totalClosedString
-        )
     }
 
 }

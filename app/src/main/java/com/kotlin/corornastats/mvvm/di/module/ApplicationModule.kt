@@ -3,10 +3,12 @@ package com.kotlin.corornastats.mvvm.di.module
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import com.kotlin.corornastats.mvvm.BuildConfig
 import com.kotlin.corornastats.mvvm.CoronaStatsApplication
 import com.kotlin.corornastats.mvvm.data.local.db.DatabaseService
+import com.kotlin.corornastats.mvvm.data.model.Cases
 import com.kotlin.corornastats.mvvm.data.remote.NetworkService
 import com.kotlin.corornastats.mvvm.data.remote.Networking
 import com.kotlin.corornastats.mvvm.di.ApplicationContext
@@ -39,6 +41,10 @@ class ApplicationModule(private val application: CoronaStatsApplication){
 
     @Provides
     fun provideSchedulerProvider(): SchedulerProvider = RxSchedulerProvider()
+
+
+    @Provides
+    fun provideLiveDataCases(): MutableLiveData<Cases> = MutableLiveData<Cases>()
 
     @Provides
     @Singleton
