@@ -16,11 +16,6 @@ class AllCaseDetailsViewModel(
     private val userRepository: UserRepository
 ) : BaseViewModel(schedulerProvider, compositeDisposable, networkHelper) {
 
-    val confirmedCases: MutableLiveData<String> = MutableLiveData()
-    val recoveredCases: MutableLiveData<String> = MutableLiveData()
-    val deaths: MutableLiveData<String> = MutableLiveData()
-    val totalActive: MutableLiveData<String> = MutableLiveData()
-    val totalClosed: MutableLiveData<String> = MutableLiveData()
     val liveData: MutableLiveData<Cases> = userRepository.liveData
 
     val loggingIn: MutableLiveData<Boolean> = MutableLiveData()
@@ -29,8 +24,6 @@ class AllCaseDetailsViewModel(
         if (checkInternetConncetionWithMessage()) {
             loggingIn.postValue(true)
             userRepository.getCaseNumbers()
-
-            loggingIn.postValue(false)
         } else {
             handleNetworkError(Throwable("Network Error"))
             loggingIn.postValue(false)
