@@ -1,4 +1,4 @@
-# Cororna-Stats-MVVM is the Android Application developed with Kotlin as programming language.
+# Cororna-Stats-MVVM is the Android Application developed with Kotlin.
 
 I have implemented MVVM architecture 
 
