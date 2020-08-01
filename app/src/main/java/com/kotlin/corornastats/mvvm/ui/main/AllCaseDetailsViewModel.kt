@@ -16,17 +16,25 @@ class AllCaseDetailsViewModel(
     private val userRepository: UserRepository
 ) : BaseViewModel(schedulerProvider, compositeDisposable, networkHelper) {
 
-    val liveData: MutableLiveData<Cases> = userRepository.liveData
-
+    var liveData: MutableLiveData<Cases> = userRepository.liveData
     val loggingIn: MutableLiveData<Boolean> = MutableLiveData()
 
     fun onNetworkCall() {
         if (checkInternetConncetionWithMessage()) {
             loggingIn.postValue(true)
-            userRepository.getCaseNumbers()
-        } else {
-            handleNetworkError(Throwable("Network Error"))
-            loggingIn.postValue(false)
+            compositeDisposable.addAll(
+                userRepository.getCaseNumbers()
+                    .subscribeOn(schedulerProvider.io())
+                    .subscribe({
+                        liveData = it
+                        loggingIn.postValue(false)
+
+                    }, {
+                        handleNetworkError(it)
+                        loggingIn.postValue(false)
+                    }
+                    )
+            )
         }
     }
 

@@ -1,6 +1,7 @@
 package com.kotlin.corornastats.mvvm.data.respository
 
 import android.accounts.NetworkErrorException
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -21,13 +22,15 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     private val networkService: NetworkService,
     private val databaseService: DatabaseService,
-    private val userPreferences: UserPreferences,
-    val liveData :MutableLiveData<Cases>
-) {
+    private val userPreferences: UserPreferences
+
+)
+
+{
     companion object {
         private const val TAG = "User Repo"
     }
-
+    val liveData: MutableLiveData<Cases> = MutableLiveData()
     fun saveCurrentUser(case: Cases) {
         case.confirmed
         case.recovered
@@ -36,12 +39,12 @@ class UserRepository @Inject constructor(
         case.totalClosed
     }
 
-    fun getCaseNumbers() {
-        var confirmedString: String = ""
-        var deathsString: String = ""
-        var recoveredString: String = ""
-        var totalActiveString: String = ""
-        var totalClosedString: String = ""
+    fun getCaseNumbers(): Single<MutableLiveData<Cases>> {
+        var confirmedString = ""
+        var deathsString = ""
+        var recoveredString = ""
+        var totalActiveString = ""
+        var totalClosedString = ""
 
         try {
             networkService.getJSON()
@@ -102,6 +105,8 @@ class UserRepository @Inject constructor(
         } catch (e: Exception) {
             println(e.message)
         }
+
+        return Single.just(liveData)
     }
 
 }

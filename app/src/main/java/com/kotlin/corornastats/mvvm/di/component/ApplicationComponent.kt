@@ -61,5 +61,4 @@ interface ApplicationComponent {
 
     fun getCompositeDisposable(): CompositeDisposable
 
-    fun getLiveDataCases():MutableLiveData<Cases>
 }

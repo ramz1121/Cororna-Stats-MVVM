@@ -21,16 +21,15 @@ import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: CoronaStatsApplication){
-
+class ApplicationTestModule(private val application:CoronaStatsApplication){
     @Provides
     @Singleton
     fun provideApplication(): Application =application
 
     @Provides
     @Singleton
-    @ApplicationContext
     fun provideContext(): Context =application
+
 
     /**
      * Since this function do not have @Singleton then each time CompositeDisposable is injected
@@ -70,5 +69,4 @@ class ApplicationModule(private val application: CoronaStatsApplication){
     @Singleton
     @Provides
     fun provideNetworkHelper(): NetworkHelper = NetworkHelper(application)
-
 }

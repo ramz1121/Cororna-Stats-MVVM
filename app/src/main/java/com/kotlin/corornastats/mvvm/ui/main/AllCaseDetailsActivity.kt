@@ -24,7 +24,6 @@ class AllCaseDetailsActivity : BaseActivity<AllCaseDetailsViewModel>() {
         swipe_refresh_layout.setOnRefreshListener {
             viewModel.onNetworkCall()
             swipe_refresh_layout.isRefreshing = true
-            pb_loading.visibility= View.GONE
         }
         viewModel.liveData.observe(this, Observer {
             tv_currentcases.setText(it.confirmed)
@@ -40,7 +39,7 @@ class AllCaseDetailsActivity : BaseActivity<AllCaseDetailsViewModel>() {
         })
         viewModel.liveData.observe(this, Observer {
             tv_closed_cases.setText(it.totalClosed)
-            if (it.totalClosed.isNotBlank()) pb_loading.visibility = View.GONE
+            if (it.totalClosed.isNotBlank())
             swipe_refresh_layout.isRefreshing = false
         })
 

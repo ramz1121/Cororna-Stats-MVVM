@@ -9,7 +9,8 @@ class NumberFormaterTest {
     fun givenValidDoubleNumber_whenConvert_shouldReturnFormattedString() {
         val number = 1235767.54
         val formater = NumberFormater.formatNumber(number)
-       assertThat(formater,true)
+        assert(formater is String)
+
 
     }
 }
